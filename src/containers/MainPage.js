@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from "./../../public/weather_icons/cloud_sun_1.svg"
 import cloud_sun_1 from '../weather_icons/cloud_sun_1.svg';
 import normal_night from '../weather_icons/normal_nihght.svg';
+import heart from '../weather_icons/heart.svg';
 import "@ui5/webcomponents/dist/List";
 import "@ui5/webcomponents/dist/StandardListItem";
 import "@ui5/webcomponents/dist/CustomListItem";
@@ -42,11 +43,34 @@ class MainPage extends Component {
         return newSate;
     }
 
+
+    changeLocation(event) {
+        let location = event.detail.item.innerHTML
+
+        if (location === "Brasov") {
+            // alert("VLAD" + location);
+            this.setState({
+                isLoaded: false,
+                items: "Foarte cald la noi",
+                icon: heart,
+                temperature: "∞"
+            });
+        }
+        else {
+            this.setState({
+                isLoaded: false,
+                items: "Unknown yet# Under development",
+                icon: cloud_sun_1,
+                temperature: ""
+            });
+        }
+    }
+
     componentDidMount() {
 
         this.select.current.addEventListener('itemPress', event => {
-            let text = event.detail.item.innerHTML
-            alert(text);
+            this.changeLocation(event);
+
         });
 
 
@@ -110,9 +134,9 @@ class MainPage extends Component {
                         marginBottom: "auto",
                         marginLeft: "20%"
                     }}>
-                        <div>{this.state.items}</div>
+                        <div>Statusul vremii: {this.state.items}</div>
                         <img src={this.state.icon} alt="logo" />
-                        <div>Temperatura : {this.state.temperature}</div>
+                        <div>Temperatura : {this.state.temperature} °C</div>
                     </div>
                 </div>
             </div >

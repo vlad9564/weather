@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './iconfinder_weather01_4102328.svg';
 import './App.css';
+// import './bootstrap.min.css';
+import "@ui5/webcomponents/dist/Button";
 
 class App extends Component {
   render() {
@@ -19,6 +21,8 @@ class App extends Component {
           >
             Learn React
           </a>
+          <ui5-button type="Default">Enabled</ui5-button>
+
         </header>
       </div>
     );

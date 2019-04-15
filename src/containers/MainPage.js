@@ -8,26 +8,23 @@ class MainPage extends Component {
     }
     componentDidMount() {
         debugger;
-        fetch("https://api.darksky.net/forecast/a2e9fc452d514f082cc3d7a0adbda5d5/45.64861,%2025.60613?units=si&lang=ro")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    debugger;
-                    this.setState({
-                        isLoaded: true,
-                        items: result.items
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+        var data = null;
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("GET", "https://api.darksky.net/forecast/a2e9fc452d514f082cc3d7a0adbda5d5/45.64861,%2025.60613?units=si&lang=ro");
+        xhr.setRequestHeader("cache-control", "no-cache");
+        // xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+
+        xhr.send(data);
     }
 
     render() {

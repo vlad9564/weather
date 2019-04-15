@@ -7,6 +7,7 @@ import "@ui5/webcomponents/dist/StandardListItem";
 import "@ui5/webcomponents/dist/CustomListItem";
 import "@ui5/webcomponents/dist/GroupHeaderListItem";
 import "@ui5/webcomponents/dist/ShellBar";
+import * as Constants from "../utils/Constants"
 
 
 class MainPage extends Component {
@@ -70,7 +71,7 @@ class MainPage extends Component {
             <div>
 
                 <ui5-shellbar
-                    profile="https://jira2.cerner.com/secure/useravatar?ownerId=cv049332&avatarId=39490"
+                    profile={Constants.ICON_PICTURE}
                     primary-title="Weather application"
                     secondary-title="@Vlad Ciobanu"
                     logo={cloud_sun_1}
@@ -79,8 +80,7 @@ class MainPage extends Component {
 
                 <div style={{ display: "-webkit-box" }} >
                     <div style={{
-                        width: "30%",
-                        height: "inherit",
+                        width: "40%",
                         borderStyle: "dotted"
                     }}>
                         <ui5-list id="myList" >
@@ -88,11 +88,15 @@ class MainPage extends Component {
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Cristina">Targoviste</ui5-li>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Vlad">Zarnesti</ui5-li>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Merem la Cluj">Cluj-Napoca</ui5-li>
+                            <ui5-li icon="sap-icon://functional-location" type="Active" description="Bucuresti">Bucuresti</ui5-li>
+                            <ui5-li icon="sap-icon://functional-location" type="Active" description="Bucuresti">Berlin</ui5-li>
+
+
                         </ui5-list>
 
                     </div>
                     <div style={{
-                        padding: "5% 10px 10px",
+                        // padding: "5% 10px 10px",
                         marginTop: "auto",
                         marginRight: "auto",
                         marginBottom: "auto",

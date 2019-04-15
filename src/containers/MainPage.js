@@ -70,7 +70,7 @@ class MainPage extends Component {
             <div>
 
                 <ui5-shellbar
-                    profile="../../../../../../www/samples/images/woman_avatar_5.png"
+                    profile="https://jira2.cerner.com/secure/useravatar?ownerId=cv049332&avatarId=39490"
                     primary-title="Weather application"
                     secondary-title="@Vlad Ciobanu"
                     logo={cloud_sun_1}
@@ -78,19 +78,25 @@ class MainPage extends Component {
                 </ui5-shellbar>
 
                 <div style={{ display: "-webkit-box" }} >
-                    <div>
-                        <ui5-list id="myList" class="full-width">
+                    <div style={{
+                        width: "30%",
+                        height: "inherit",
+                        borderStyle: "dotted"
+                    }}>
+                        <ui5-list id="myList" >
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la ei doi">Brasov</ui5-li>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Cristina">Targoviste</ui5-li>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Vlad">Zarnesti</ui5-li>
-
+                            <ui5-li icon="sap-icon://functional-location" type="Active" description="Merem la Cluj">Cluj-Napoca</ui5-li>
                         </ui5-list>
+
                     </div>
                     <div style={{
-                        margin: "auto",
-                        width: "50 %",
-                        padding: "10px",
-                        paddingTop: "5%"
+                        padding: "5% 10px 10px",
+                        marginTop: "auto",
+                        marginRight: "auto",
+                        marginBottom: "auto",
+                        marginLeft: "20%"
                     }}>
                         <div>{this.state.items}</div>
                         <img src={this.state.icon} alt="logo" />

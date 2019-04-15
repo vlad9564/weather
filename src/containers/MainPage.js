@@ -8,23 +8,15 @@ class MainPage extends Component {
     }
     componentDidMount() {
         debugger;
-        var data = null;
+        const DarkSky = require('dark-sky')
+        const darksky = new DarkSky('a2e9fc452d514f082cc3d7a0adbda5d5') // Your API KEY can be hardcoded, but I recommend setting it as an env variable.
 
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open("GET", "https://api.darksky.net/forecast/a2e9fc452d514f082cc3d7a0adbda5d5/45.64861,%2025.60613?units=si&lang=ro");
-        xhr.setRequestHeader("cache-control", "no-cache");
-        // xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-
-        xhr.send(data);
+        darksky
+            .latitude('37.8267')
+            .longitude(-122.423)
+            .get()
+            .then(console.log)
+            .catch(console.log)
     }
 
     render() {

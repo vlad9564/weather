@@ -15,7 +15,9 @@ class MainPage extends Component {
 
     constructor(props, state) {
         // this.myFunction = this.myFunction.bind(this);
+
         super(props, state);
+        this.select = React.createRef();
         this.state = {
             isLoaded: false,
             items: "TEst"
@@ -41,6 +43,13 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
+
+        this.select.current.addEventListener('itemPress', event => {
+            let text = event.detail.item.innerHTML
+            alert(text);
+        });
+
+
         debugger;
         const api = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/a2e9fc452d514f082cc3d7a0adbda5d5/45.64861,%2025.60613?units=si&lang=ro';
         fetch(api)
@@ -80,10 +89,9 @@ class MainPage extends Component {
 
                 <div style={{ display: "-webkit-box" }} >
                     <div style={{
-                        width: "40%",
-                        borderStyle: "dotted"
+                        width: "40%"
                     }}>
-                        <ui5-list id="myList" >
+                        <ui5-list id="myList" ref={this.select}>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la ei doi">Brasov</ui5-li>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Cristina">Targoviste</ui5-li>
                             <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Vlad">Zarnesti</ui5-li>

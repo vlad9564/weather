@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 // import logo from "./../../public/weather_icons/cloud_sun_1.svg"
-import logo from '../weather_icons/cloud_sun_1.svg';
+import cloud_sun_1 from '../weather_icons/cloud_sun_1.svg';
+import normal_night from '../weather_icons/normal_nihght.svg';
+import "@ui5/webcomponents/dist/List";
+import "@ui5/webcomponents/dist/StandardListItem";
+import "@ui5/webcomponents/dist/CustomListItem";
+import "@ui5/webcomponents/dist/GroupHeaderListItem";
+import "@ui5/webcomponents/dist/ShellBar";
+
+
 class MainPage extends Component {
 
 
@@ -13,14 +21,19 @@ class MainPage extends Component {
         }
     }
     prepareData(data) {
-        let icon;
-        if (data.currently.icon === "clear-night") {
-            icon = logo;
+        var icon;
+        switch (data.currently.icon) {
+            case "clear-night":
+                icon = normal_night;
+                break;
+
+            default:
+                break;
         }
         var newSate = {
             isLoaded: false,
             items: data.currently.summary,
-            icon: logo,
+            icon: icon,
             temperature: data.currently.temperature
         }
         return newSate;
@@ -49,17 +62,42 @@ class MainPage extends Component {
                     });
                 }
             )
-
     }
 
     render() {
 
         return (
             <div>
-                <div>{this.state.items}</div>
-                <img src={this.state.icon} alt="logo" />
-                <div>Temperatura : {this.state.temperature}</div>
-            </div>
+
+                <ui5-shellbar
+                    profile="../../../../../../www/samples/images/woman_avatar_5.png"
+                    primary-title="Weather application"
+                    secondary-title="@Vlad Ciobanu"
+                    logo={cloud_sun_1}
+                >
+                </ui5-shellbar>
+
+                <div style={{ display: "-webkit-box" }} >
+                    <div>
+                        <ui5-list id="myList" class="full-width">
+                            <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la ei doi">Brasov</ui5-li>
+                            <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Cristina">Targoviste</ui5-li>
+                            <ui5-li icon="sap-icon://functional-location" type="Active" description="Acasa la Vlad">Zarnesti</ui5-li>
+
+                        </ui5-list>
+                    </div>
+                    <div style={{
+                        margin: "auto",
+                        width: "50 %",
+                        padding: "10px",
+                        paddingTop: "5%"
+                    }}>
+                        <div>{this.state.items}</div>
+                        <img src={this.state.icon} alt="logo" />
+                        <div>Temperatura : {this.state.temperature}</div>
+                    </div>
+                </div>
+            </div >
         )
     }
 }

@@ -32,6 +32,7 @@ class MainPage extends Component {
                 break;
 
             default:
+                icon = cloud_sun_1
                 break;
         }
         var newSate = {
@@ -127,13 +128,13 @@ class MainPage extends Component {
                         </ui5-list>
 
                     </div>
-                    <div style={{
-                        // padding: "5% 10px 10px",
-                        marginTop: "auto",
-                        marginRight: "auto",
-                        marginBottom: "auto",
-                        marginLeft: "20%"
-                    }}>
+                    <div
+                    // padding: "5% 10px 10px",
+                    // marginTop: "auto",
+                    // marginRight: "auto",
+                    // marginBottom: "auto",
+                    // marginLeft: "20%"
+                    >
                         <div>Statusul vremii: {this.state.items}</div>
                         <img src={this.state.icon} alt="logo" />
                         <div>Temperatura : {this.state.temperature} °C</div>

@@ -21,7 +21,7 @@ class MainPage extends Component {
         super(props, state);
         debugger;
         // var x = navigator.geolocation.getCurrentPosition(this.success);
-
+        
         this.select = React.createRef();
         this.state = {
             isLoaded: false,

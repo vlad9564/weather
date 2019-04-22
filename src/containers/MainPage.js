@@ -9,30 +9,36 @@ import "@ui5/webcomponents/dist/StandardListItem";
 import "@ui5/webcomponents/dist/CustomListItem";
 import "@ui5/webcomponents/dist/GroupHeaderListItem";
 import "@ui5/webcomponents/dist/ShellBar";
+import DaysWeather from './DaysWeather';
+import { Chart } from "react-charts";
+// import Chart from './Chart';
+
 import * as Constants from "../utils/Constants"
 
-
+var x = 3;
 class MainPage extends Component {
+
 
 
     constructor(props, state) {
         // this.myFunction = this.myFunction.bind(this);
 
         super(props, state);
-        debugger;
+
         // var x = navigator.geolocation.getCurrentPosition(this.success);
-        
+        // var x = require("augero-constants");
         this.select = React.createRef();
         this.state = {
             isLoaded: false,
             items: "TEst"
         }
+        this.weatherDays = [];
 
     }
 
     prepareData(data) {
         var icon;
-        debugger;
+        // debugger;
         switch (data.currently.icon) {
             case "clear-night":
                 icon = normal_night;
@@ -48,15 +54,16 @@ class MainPage extends Component {
             isLoaded: false,
             items: data.currently.summary,
             icon: icon,
-            temperature: data.currently.temperature
+            temperature: data.currently.temperature,
+            allData: data
         }
         return newSate;
     }
 
 
     changeLocation(event) {
-
-
+        this.weatherDays = [];
+        this.changeWeatherDataForDays(this.state.allData)
         let location = event.detail.item.innerHTML
         switch (location) {
             case "BrasovN":
@@ -93,6 +100,55 @@ class MainPage extends Component {
 
     }
 
+
+    setChartForWeather(data) {
+        debugger;
+    }
+
+    changeWeatherDataForDays(days) {
+        // debugger
+
+        var x = days.daily.data.forEach(element => {
+            // debugger;
+            var dataStructure = {
+                data: new Date(element.time * 1000),
+                icon: element.icon,
+                summary: element.summary,
+                maximTemp: element.temperatureHigh,
+                maximTempHour: new Date(element.temperatureHighTime * 1000),
+                uvIndex: element.uvIndex,
+                uvIndexTime: new Date(element.uvIndexTime * 1000),
+                precipProbability: element.precipProbability,
+                sunrise: new Date(element.sunriseTime * 1000),
+                sunset: new Date(element.sunsetTime * 1000)
+            }
+            this.weatherDays.push(dataStructure);
+
+        }, this);
+        debugger;
+
+
+        // Create a new JavaScript Date object based on the timestamp
+        // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+        // this.calculateDays(days);
+
+    }
+    calculateDays(days) {
+        var date = new Date(days.daily.data[0].time * 1000);
+        var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        // Convert timestamp to milliseconds
+        // var date = new Date(unixtimestamp*1000);
+        // Year
+        var year = date.getFullYear();
+        var month = months_arr[date.getMonth()];
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = "0" + date.getMinutes();
+        var seconds = "0" + date.getSeconds();
+        var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+        console.log(convdataTime);
+    }
+
     getWeatherByLatLong(coord) {
 
         const api = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/a2e9fc452d514f082cc3d7a0adbda5d5/' + coord + '?units=si&lang=ro';
@@ -100,7 +156,7 @@ class MainPage extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    debugger;
+                    // debugger;
                     console.table(result)
                     var newSate = this.prepareData(result);
                     this.setState(newSate);
@@ -121,10 +177,10 @@ class MainPage extends Component {
     componentDidMount() {
 
         navigator.geolocation.getCurrentPosition(() => {
-            debugger;
+            // debugger
         }
             , () => {
-                debugger;
+                // debugger;
             });
 
         this.select.current.addEventListener('itemPress', event => {
@@ -134,27 +190,7 @@ class MainPage extends Component {
 
         const defaultCoord = "44.92543,25.4567";
         this.getWeatherByLatLong(defaultCoord);
-        // const api = 'https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/a2e9fc452d514f082cc3d7a0adbda5d5/' + defaultCoord + '?units=si&lang=ro';
-        // fetch(api)
-        //     .then(res => res.json())
-        //     .then(
-        //         (result) => {
-        //             debugger;
-        //             console.table(result)
-        //             var newSate = this.prepareData(result);
-        //             this.setState(newSate);
-        //         },
-        //         // Note: it's important to handle errors here
-        //         // instead of a catch() block so that we don't swallow
-        //         // exceptions from actual bugs in components.
-        //         (error) => {
-        //             debugger;
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 error
-        //             });
-        //         }
-        //     )
+
     }
 
     render() {
@@ -196,11 +232,47 @@ class MainPage extends Component {
                         // marginLeft: "20%"
                         style={{ marginLeft: "5%", marginTop: "2%" }}
                     >
+                        <label>Statusl vremii astazi</label>
                         <div>Statusul vremii: {this.state.items}</div>
                         <img src={this.state.icon} alt="logo" />
                         <div>Temperatura : {this.state.temperature} °C</div>
+                        <div
+                            style={{
+                                width: "400px",
+                                height: "300px"
+                            }}
+                        >
+                            <Chart
+                                data={[
+                                    {
+                                        label: "Series 1",
+                                        data: [[new Date(), 18], [new Date() + 1, 22]]
+                                    }
+                                    // {
+                                    //     label: "Series 2",
+                                    //     data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]]
+                                    // },
+
+                                ]}
+                                axes={[
+                                    { primary: true, type: "linear", position: "bottom" },
+                                    { type: "linear", position: "left" }
+                                ]}
+                            />
+                        </div>
+                        {/* <div style={{ display: "flex" }}>
+
+                            <div style={{ marginLeft: "2px" }}><ui5-button type="Emphasized">Azi</ui5-button></div>
+                            <div style={{ marginLeft: "2px" }}><ui5-button type="Emphasized">Maine</ui5-button></div>
+                            <div style={{ marginLeft: "2px" }}><ui5-button type="Emphasized">Poimaine</ui5-button></div>
+                            <div style={{ marginLeft: "2px" }}><ui5-button type="Emphasized">Peste 3 zile</ui5-button></div>
+                            <div style={{ marginLeft: "2px" }}><ui5-button type="Emphasized">Peste 4 zile</ui5-button></div>
+
+                        </div> */}
+                        <DaysWeather data={this.weatherDays}></DaysWeather>
                     </div>
-                </div>
+
+                </div >
             </div >
         )
     }
